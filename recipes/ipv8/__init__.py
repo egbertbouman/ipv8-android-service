@@ -12,13 +12,13 @@ class LocalIPV8Recipe(PythonRecipe):
 
     url = 'git+https://github.com/Tribler/py-ipv8.git'
 
-    depends = ['apsw', 'cryptography', 'libsodium', 'netifaces',
+    depends = ['tlswitness', 'apsw', 'cryptography', 'libsodium', 'netifaces',
                'python2', 'setuptools', 'twisted', 'lib2to3', 'libnacl'
               ]
 
-    patches = ['no_tunnel_trustchain.patch']
+    patches = ['no_tunnel_trustchain.patch', 'tlswitness.patch']
 
-    python_depends = ['sqlite3', 'decorator', 'libnacl', 'pyasn1', 'six']
+    python_depends = ['hyperlink', 'pysqlite3', 'decorator', 'libnacl', 'pyasn1', 'six']
 
     site_packages_name = 'ipv8'
 

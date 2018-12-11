@@ -1,0 +1,30 @@
+diff --git a/ipv8/REST/root_endpoint.py b/ipv8/REST/root_endpoint.py
+index 2fca7c9..b00884e 100644
+--- a/ipv8/REST/root_endpoint.py
++++ b/ipv8/REST/root_endpoint.py
+@@ -1,6 +1,14 @@
+ from __future__ import absolute_import
+ 
++import os
+ from twisted.web import resource
++from twisted.web.static import File
++import tlswitness
++from tlswitness.defs import BASE_DIR
++from tlswitness.provider.digid import DigidProvider
++from tlswitness.provider.github import GithubProvider
++from tlswitness.provider.mijnoverheid import MijnOverheidProvider
++from tlswitness.restapi.attestation_endpoint import AttestationEndpoint as TLSWitnessEndpoint
+ 
+ from .attestation_endpoint import AttestationEndpoint
+ from .dht_endpoint import DHTEndpoint
+@@ -29,3 +37,9 @@ class RootEndpoint(resource.Resource):
+         self.putChild(b'overlays', OverlaysEndpoint(session))
+         self.putChild(b'dht', DHTEndpoint(session))
+         self.putChild(b'tunnel', TunnelEndpoint(session))
++
++        proxy_args = ('https://tlswitness.org:8124', os.path.join(os.path.dirname(tlswitness.__file__), 'cert.crt'))
++        self.putChild(b'tlswitness', TLSWitnessEndpoint({'digid': DigidProvider(*proxy_args),
++                                                         'github': GithubProvider(*proxy_args),
++                                                         'mijnoverheid': MijnOverheidProvider(*proxy_args)}))
++        self.putChild(b'gui', File(os.path.join(BASE_DIR, 'webapp', 'dist')))
+
