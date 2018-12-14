@@ -22,7 +22,10 @@ index 2fca7c9..b00884e 100644
          self.putChild(b'dht', DHTEndpoint(session))
          self.putChild(b'tunnel', TunnelEndpoint(session))
 +
-+        proxy_args = ('https://tlswitness.org:8124', os.path.join(os.path.dirname(tlswitness.__file__), 'cert.crt'))
++        cert_fn = os.path.join(BASE_DIR, 'cacert.pem')
++        if os.path.exists(cert_fn):
++            os.environ['SSL_CERT_FILE'] = cert_fn
++        proxy_args = ('https://tlswitness.org:8123', os.path.join(BASE_DIR, 'cert_web.crt'))
 +        self.putChild(b'api', TLSWitnessEndpoint({'digid': DigidProvider(*proxy_args),
 +                                                  'github': GithubProvider(*proxy_args),
 +                                                  'mijnoverheid': MijnOverheidProvider(*proxy_args)}))
