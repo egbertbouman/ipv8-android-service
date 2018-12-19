@@ -29,5 +29,5 @@ index 2fca7c9..9b42d9b 100644
 +        vars = globals()
 +        proxy_args = ('https://tlswitness.org:8123', os.path.join(BASE_DIR, 'cert_web.crt'))
 +        providers = {name: vars[settings['class']](*proxy_args) for name, settings in PROVIDERS.iteritems()}
-+        self.putChild(b'api', APIEndpoint(providers, None))
++        self.putChild(b'api', APIEndpoint(providers, 'http://localhost:8085'))
 +        self.putChild(b'gui', File(os.path.join(BASE_DIR, 'webapp', 'dist')))

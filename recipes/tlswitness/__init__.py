@@ -13,7 +13,7 @@ class TLSWitnessRecipe(PythonRecipe):
     url = 'http://localhost/TLSWitness-{version}.tar.gz'
     depends = ['python2', 'twisted']
     patches = []
-    python_depends = ['oscrypto', 'ecdsa', 'tlslite-ng', 'urllib3', 'chardet', 'certifi', 'requests', 'certvalidator']
+    python_depends = ['treq', 'oscrypto', 'ecdsa', 'tlslite-ng', 'urllib3', 'chardet', 'certifi', 'requests', 'certvalidator']
     site_packages_name = 'tlswitness'
     call_hostpython_via_targetpython = False
 
